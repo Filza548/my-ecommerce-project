@@ -1,5 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from '../context/CartContext';
+import Navbar from "./Component/Navbar";
+import Footer from "./Component/Footer";
+
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,8 +28,124 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+
+        <CartProvider>
+          <Navbar/>  
+          {children}
+          <Footer/>
+          </CartProvider>
       </body>
     </html>
   );
 }
+
+
+// app/layout.js
+// 'use client';
+
+// import { Inter } from 'next/font/google';
+// import './globals.css';
+// import { CartProvider } from '../context/CartContext';
+// import CartIcon from './Component/CartIcon.jsx';
+// import CartSidebar from './Component/CartSidebar.jsx';
+// import Link from 'next/link';
+// import { FiHome, FiShoppingBag, FiUser } from 'react-icons/fi';
+
+// const inter = Inter({ subsets: ['latin'] });
+
+// export default function RootLayout({ children }) {
+//   return (
+//     <html lang="en">
+//       <body className={`${inter.className} bg-gray-50`}>
+//         <CartProvider>
+//           {/* Header */}
+//           <header className="bg-white shadow-sm sticky top-0 z-40">
+//             <div className="container mx-auto px-4">
+//               <div className="flex items-center justify-between py-4">
+//                 {/* Logo */}
+//                 <Link href="/" className="text-2xl font-bold text-gray-800">
+//                   MobileShop
+//                 </Link>
+
+//                 {/* Navigation */}
+//                 <nav className="hidden md:flex items-center space-x-8">
+//                   <Link href="/" className="text-gray-600 hover:text-gray-900 flex items-center">
+//                     <FiHome className="mr-2" />
+//                     Home
+//                   </Link>
+//                   <Link href="#" className="text-gray-600 hover:text-gray-900 flex items-center">
+//                     <FiShoppingBag className="mr-2" />
+//                     Products
+//                   </Link>
+//                   <Link href="#" className="text-gray-600 hover:text-gray-900 flex items-center">
+//                     <FiUser className="mr-2" />
+//                     Account
+//                   </Link>
+//                 </nav>
+
+//                 {/* Cart Icon */}
+//                 <CartIcon />
+//               </div>
+//             </div>
+//           </header>
+
+//           {/* Main Content */}
+//           <main className="min-h-screen">
+//             {children}
+//           </main>
+
+//           {/* Cart Sidebar */}
+//           <CartSidebar />
+
+//           {/* Footer */}
+//           <footer className="bg-gray-900 text-white mt-12">
+//             <div className="container mx-auto px-4 py-12">
+//               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+//                 <div>
+//                   <h3 className="text-xl font-bold mb-4">MobileShop</h3>
+//                   <p className="text-gray-400">
+//                     Your one-stop shop for all mobile accessories and electronics.
+//                   </p>
+//                 </div>
+                
+//                 <div>
+//                   <h4 className="font-semibold mb-4">Quick Links</h4>
+//                   <ul className="space-y-2 text-gray-400">
+//                     <li><Link href="/" className="hover:text-white">Home</Link></li>
+//                     <li><Link href="#" className="hover:text-white">Products</Link></li>
+//                     <li><Link href="#" className="hover:text-white">Categories</Link></li>
+//                     <li><Link href="#" className="hover:text-white">Brands</Link></li>
+//                   </ul>
+//                 </div>
+                
+//                 <div>
+//                   <h4 className="font-semibold mb-4">Customer Service</h4>
+//                   <ul className="space-y-2 text-gray-400">
+//                     <li><Link href="#" className="hover:text-white">Contact Us</Link></li>
+//                     <li><Link href="#" className="hover:text-white">FAQ</Link></li>
+//                     <li><Link href="#" className="hover:text-white">Shipping Policy</Link></li>
+//                     <li><Link href="#" className="hover:text-white">Returns</Link></li>
+//                   </ul>
+//                 </div>
+                
+//                 <div>
+//                   <h4 className="font-semibold mb-4">Contact Info</h4>
+//                   <p className="text-gray-400">
+//                     123 Tech Street, Silicon Valley<br />
+//                     California, USA<br />
+//                     Phone: 1-800-MOBILE-SHOP<br />
+//                     Email: support@mobileshop.com
+//                   </p>
+//                 </div>
+//               </div>
+              
+//               <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+//                 <p>© 2024 MobileShop. All rights reserved.</p>
+//               </div>
+//             </div>
+//           </footer>
+//         </CartProvider>
+//       </body>
+//     </html>
+//   );
+// }

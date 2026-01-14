@@ -16,7 +16,7 @@ export default function Home() {
 
     <>
   
-   <Navbar/>
+   {/* <Navbar/> */}
    <HomeHeroSection/>
    <DealsOffers/>
    <ItemsGroup/>,
@@ -26,7 +26,7 @@ export default function Home() {
    <Card/>
    <FlagComponent/>
    <SecondLastComponentOnLandingPage/>
-   <Footer/>
+   {/* <Footer/> */}
 
     </>
     

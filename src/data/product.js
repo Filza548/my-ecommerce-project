@@ -200,9 +200,9 @@ export const products = [
       'Weight': '5.4g each'
     },
     images: [
-      '/images/product2-1.jpg',
-      '/images/product2-2.jpg',
-      '/images/product2-3.jpg'
+      '/assets/assets/mobile/image-1.jpg',
+      '/assets/assets/mobile/image-1.jpg',
+      '/assets/assets/mobile/image-1.jpg'
     ],
     stock: 120,
     sku: 'AP-AIRPODS-PRO'
@@ -230,9 +230,9 @@ export const products = [
       'Weight': '5.4g each'
     },
     images: [
-      '/images/product2-1.jpg',
-      '/images/product2-2.jpg',
-      '/images/product2-3.jpg'
+     '/assets/assets/mobile/image-2.jpg',
+      '/assets/assets/mobile/image-2.jpg',
+      '/assets/assets/mobile/image-2.jpg'
     ],
     stock: 120,
     sku: 'AP-AIRPODS-PRO'

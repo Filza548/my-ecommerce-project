@@ -1,6 +1,6 @@
 `use client`;
 import Image from "next/image";
-import Navbar from "./Component/Navbar.jsx";
+// import Navbar from "./Component/Navbar.jsx";
 import HomeHeroSection from "./Component/HomeHeroSection.jsx";
 import DealsOffers from "./Component/DealsOffers.jsx";
 import {ItemsGroup,ItemsGroupElectronics} from "./Component/ItemsGroup.jsx";

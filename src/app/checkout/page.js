@@ -1,15 +1,26 @@
-// app/checkout/page.js
+// app/checkout/page.js - CORRECTED VERSION
 'use client';
 
-import { useState, useContext } from 'react';
+import { Suspense, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { CartContext } from '../../context/CartContext';
 import Link from 'next/link';
 import { FiLock, FiCreditCard, FiTruck, FiCheck, FiArrowLeft } from 'react-icons/fi';
 
-export default function CheckoutPage() {
+// Loading component
+function CheckoutLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+  );
+}
+
+// Main checkout content
+function CheckoutContent() {
   const router = useRouter();
   const cartContext = useContext(CartContext);
+  const [isClient, setIsClient] = useState(false);
   
   const [step, setStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -25,13 +36,18 @@ export default function CheckoutPage() {
     paymentMethod: 'credit_card'
   });
 
-  const cartItems = cartContext?.cartItems || [];
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Client-side only variables
+  const cartItems = isClient ? (cartContext?.cartItems || []) : [];
   const getCartTotal = cartContext?.getCartTotal || (() => 0);
   const clearCart = cartContext?.clearCart;
 
-  const shippingCost = getCartTotal() > 100 ? 0 : 9.99;
-  const tax = getCartTotal() * 0.08;
-  const total = getCartTotal() + shippingCost + tax;
+  const shippingCost = isClient ? (getCartTotal() > 100 ? 0 : 9.99) : 0;
+  const tax = isClient ? getCartTotal() * 0.08 : 0;
+  const total = isClient ? getCartTotal() + shippingCost + tax : 0;
 
   const handleInputChange = (e) => {
     setFormData({
@@ -70,8 +86,10 @@ export default function CheckoutPage() {
         status: 'processing'
       };
       
-      // Save order to localStorage (in real app, send to backend)
-      localStorage.setItem('lastOrder', JSON.stringify(order));
+      // Save order to localStorage (client-side only)
+      if (isClient && typeof window !== 'undefined') {
+        localStorage.setItem('lastOrder', JSON.stringify(order));
+      }
       
       // Clear cart
       if (clearCart) {
@@ -82,6 +100,11 @@ export default function CheckoutPage() {
       router.push(`/order-success?orderId=${orderId}`);
     }
   };
+
+  // Show loading if not client-side yet
+  if (!isClient) {
+    return <CheckoutLoading />;
+  }
 
   if (cartItems.length === 0) {
     return (
@@ -473,3 +496,17 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+// Main exported component with Suspense
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutLoading />}>
+      <CheckoutContent />
+    </Suspense>
+  );
+}
+
+// Vercel ke liye static export ko disable karein
+// SIRF yeh line use karein, revalidate nahi
+export const dynamic = 'force-dynamic';
+// export const revalidate = 0; // ← YE HATA DEIN
